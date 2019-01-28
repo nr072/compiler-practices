@@ -2,9 +2,9 @@
 
 * * *
 
-### Task 1
+## Task 1
 
-#### Input:
+### Input:
 
 ```java
 int a, b, c;
@@ -23,11 +23,11 @@ else
 }
 ```
 
-#### Output:
+### Output:
 
-**Keywords:** int, float, if, else
-**Identifiers:** a, b, c, d, e
-**Math Operators:** +, -, =
-**Logical Operators:** >
-**Numerical Values:** 5, 6, 2.0, 6.0
-**Others:** , ; ( ) { }
+**Keywords:** int, float, if, else  
+ **Identifiers:** a, b, c, d, e  
+ **Math Operators:** +, -, =  
+ **Logical Operators:** >  
+ **Numerical Values:** 5, 6, 2.0, 6.0  
+ **Others:** , ; ( ) { }  
