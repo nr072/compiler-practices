@@ -10,7 +10,7 @@ See the example for more details. You can assume that, there will be a space aft
 
 ### Input:
 
-```java
+```c
 int a, b, c;
 float d, e;
 a = b = 5;
