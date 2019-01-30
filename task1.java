@@ -15,19 +15,17 @@ public class task1 {
 
 
 
-    // List of Java keywords, obtained from:
-    //   https://docs.oracle.com/javase/tutorial/java/nutsandbolts/_keywords.html
+    // List of C language keywords, obtained from:
+    //   https://docs.microsoft.com/en-us/cpp/c-language/c-keywords
     public static String [] keywords     = { 
-        "abstract", "continue", "for", "new", "switch", 
-        "assert", "default", "goto", "package", "synchronized", 
-        "boolean", "do", "if", "private", "this", 
-        "break", "double", "implements", "protected", "throw", 
-        "byte", "else", "import", "public", "throws", 
-        "case", "enum", "instanceof", "return", "transient", 
-        "catch", "extends", "int", "short", "try", 
-        "char", "final", "interface", "static", "void", 
-        "class", "finally", "long", "strictfp", "volatile", 
-        "const", "float", "native", "super", "while" 
+        "auto", "double", "int", "struct"
+        "break", "else", "long", "switch"
+        "case", "enum", "register", "typedef"
+        "char", "extern", "return", "union"
+        "const", "float", "short", "unsigned"
+        "continue", "for", "signed", "void"
+        "default", "goto", "sizeof", "volatile"
+        "do", "if", "static", "while"
     };
 
     public static String [] indentifiers = {};
@@ -115,15 +113,15 @@ public class task1 {
 
 
 
-    // Returns "true" if token matches the pattern for Java identifiers.
+    // Returns "true" if token matches the pattern for C identifiers.
     // Otherwise, returns "false".
     // Source for identifier pattern validation:
-    //   https://docs.oracle.com/javase/specs/jls/se7/html/jls-3.html#jls-3.8
+    //   https://docs.microsoft.com/en-us/cpp/c-language/c-identifiers#syntax
     //
     // BTW, the following lines of code are apparently valid and it is weird:
     //
-    //     String _ = "someString";
-    //     String __ = "someString";
+    //     char _[20] = "someString";
+    //     char __[20] = "someString";
     //
     public static boolean isIdentifier(String token) {
 
@@ -141,9 +139,9 @@ public class task1 {
     // Returns "true" if token matches any item from the list of stored
     // mathematical operators. Otherwise, returns "false".
     // The classification of operators have been done by following the question
-    // provided, so they may not match the actual Java classification. (For
-    // example. the equal sign ('=') has been tagged as a mathematical operator,
-    // when it is actually an assignment operator.)
+    // provided, so they may not match the actual C classification. (For
+    // example. the equal sign ('=') has been mentioned as a mathematical
+    // operator, when it is actually an assignment operator.)
     public static boolean isMathOp(String token) {
         return ( Arrays.asList(mathOps).contains(token) ) ? true : false;
     }
@@ -153,9 +151,9 @@ public class task1 {
     // Returns "true" if token matches any item from the list of stored
     // logical operators. Otherwise, returns "false".
     // The classification of operators have been done by following the question
-    // provided, so they may not match the actual Java classification. (For
-    // example. the equal sign ('=') has been tagged as a mathematical operator,
-    // when it is actually an assignment operator.)
+    // provided, so they may not match the actual C classification. (For
+    // example. the equal sign ('=') has been mentioned as a mathematical
+    // operator, when it is actually an assignment operator.)
     public static boolean isLogicalOp(String token) {
         return ( Arrays.asList(logicalOps).contains(token) ) ? true : false;
     }
