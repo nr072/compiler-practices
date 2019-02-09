@@ -1,6 +1,10 @@
 # Question
 
+
+
 * * *
+
+
 
 ## Task 1
 
@@ -35,3 +39,42 @@ else
  **Logical Operators:** >  
  **Numerical Values:** 5, 6, 2.0, 6.0  
  **Others:** , ; ( ) { }  
+ 
+ 
+ 
+ * * *
+
+
+
+## Task 2
+
+User will be asked first to input an integer value n followed by n lines of Strings. You have to find out whether it is an email or a web address or neither, along with its line number.
+
+  - You are not allowed to use any kind of built-in Regular Expression.
+  - The first part of a valid email address must start with a letter. But subsequent characters can be either letters or digits.
+  - The first part of a valid web address must be "www".
+  - The middle part of a valid email address (domain name; between the '@' and the '.') must not contain anything other than a letter.
+  - The middle part of a valid web address (domain name) must start with a letter. But subsequent characters can be either letters or digits.
+  - The 3rd (last) part of both a valid email and web address must be "com".
+
+### Input:
+
+4
+theEarthMovesRoundTheSun@gmail.com
+www.duh.com
+www.thisIsAValidEmailAddress.com
+you@liar.com
+3
+1IsAnInteger@smart.com
+www.validateYourEmails.com
+http://www.nobodyLovesMe.com
+
+### Output:
+
+Email, 1
+Web, 2
+Web, 3
+Email, 4
+None! 1
+Web, 2
+None! 3
