@@ -59,22 +59,22 @@ User will be asked first to input an integer value n followed by n lines of Stri
 
 ### Input:
 
-4
-theEarthMovesRoundTheSun@gmail.com
-www.duh.com
-www.thisIsAValidEmailAddress.com
-you@liar.com
-3
-1IsAnInteger@smart.com
-www.validateYourEmails.com
-http://www.nobodyLovesMe.com
+4  
+theEarthMovesRoundTheSun@gmail.com  
+www.duh.com  
+www.thisIsAValidEmailAddress.com  
+you@liar.com  
+3  
+1IsAnInteger@smart.com  
+www.validateYourEmails.com  
+http://www.nobodyLovesMe.com  
 
 ### Output:
 
-Email, 1
-Web, 2
-Web, 3
-Email, 4
-None! 1
-Web, 2
-None! 3
+Email, 1  
+Web, 2  
+Web, 3  
+Email, 4  
+None! 1  
+Web, 2  
+None! 3  
