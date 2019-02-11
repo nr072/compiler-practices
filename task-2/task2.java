@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Scanner;
 
 
 
@@ -224,60 +225,46 @@ public class task2 {
     
     public static void main(String [] args)  {
 
-        try {
+        Scanner k = new Scanner(System.in);
 
-            BufferedReader br = new BufferedReader( new FileReader("input.txt") );
-            String line = "";
-            boolean isInt = false;
-            int iteration;
+        String line = "";
+        boolean isInt = false;
+        int iteration = 0;
+        String result = "";
 
-            while ( (line = br.readLine())!=null ) {
+        System.out.println(
+            "Kindly enter number of inputs, " + 
+            "followed by that many lines of inputs:"
+        );
+        line = k.nextLine();
 
-                isInt = isInt(line);
+        isInt = isInt(line);
 
-                // If line is an integer, consider it the number of upcoming
-                // input lines to read and parse.
-                if (isInt) {
+        // If line is an integer, consider it the number of upcoming
+        // input lines to read and parse.
+        if (isInt) {
 
-                    iteration = Character.getNumericValue(line.charAt(0));
+            iteration = Character.getNumericValue(line.charAt(0));
 
-                    // Read and parse input lines only the number specified.
-                    // Ignore all further lines.
-                    for (int c=0; c<iteration; ++c) {
+            for (int c=0; c<iteration; ++c) {
 
-                        if ( (line = br.readLine())!=null ) {
-                            System.out.println( 
-                                ( isEmail(line) ? ("Email, " + (c+1)) 
-                                    : isWebsite(line) ? ("Web, " + (c+1)) 
-                                        : ("None! ") + (c+1) )
-                            );
-                        }
-
-                    }
-
-                }
-
-                // Extra input lines (more than the number given as input):
-                else {
-                    System.out.println("Excuse me, there are more inputs than specified!");
+                if ( (line = k.nextLine())!=null ) {
+                    result += (
+                        isEmail(line) ? ("Email, " + (c+1)) 
+                            : isWebsite(line) ? ("Web, " + (c+1)) 
+                                : ("None! ") + (c+1)
+                    ) + "\n";
                 }
 
             }
 
         }
 
-        catch (FileNotFoundException e) {
-            System.out.println("Input file missing! Somebody call the police!");
+        else {
+            System.out.println("Sorry, not a valid number!");
         }
-        catch (IOException e) {
-            System.out.println("Something happened with file reading." 
-                + " An investigation committee is being prepared.\n" 
-                + " Meanwhile, read this: https://stackoverflow.com/a/2629740"
-            );
-        }
-        catch (Exception e) {
-            System.out.println("Something happened. No idea what. Let's get on with life.");
-        }
+
+        System.out.print(result);
 
     }
 
