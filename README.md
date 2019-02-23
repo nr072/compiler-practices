@@ -33,13 +33,14 @@ else
 
 ### Output:
 
-**Keywords:** int, float, if, else  
- **Identifiers:** a, b, c, d, e  
- **Math Operators:** +, -, =  
- **Logical Operators:** >  
- **Numerical Values:** 5, 6, 2.0, 6.0  
- **Others:** , ; ( ) { }  
- 
+```
+Keywords: int, float, if, else
+Identifiers: a, b, c, d, e
+Math Operators: +, -, =
+Logical Operators: >
+Numerical Values: 5, 6, 2.0, 6.0
+Others: , ; ( ) { }
+```
  
  
  * * *
@@ -59,25 +60,29 @@ User will be asked first to input an integer value n followed by n lines of Stri
 
 ### Input:
 
-4  
-theEarthMovesRoundTheSun@gmail.com  
-www.duh.com  
-www.thisIsAValidEmailAddress.com  
-you@liar.com  
-3  
-1IsAnInteger@smart.com  
-www.validateYourEmails.com  
-http://www.nobodyLovesMe.com  
+```
+4
+theEarthMovesRoundTheSun@gmail.com
+www.duh.com
+www.thisIsAValidEmailAddress.com
+you@liar.com
+3
+1IsAnInteger@smart.com
+www.validateYourEmails.com
+http://www.nobodyLovesMe.com
+```
 
 ### Output:
 
-Email, 1  
-Web, 2  
-Web, 3  
-Email, 4  
-None! 1  
-Web, 2  
-None! 3  
+```
+Email, 1
+Web, 2
+Web, 3
+Email, 4
+None! 1
+Web, 2
+None! 3
+```
 
 
 
@@ -112,39 +117,45 @@ Exactly N times | [^aeiou]{6} | rhythm | rhythms
 
 ### Input:
 
-2  
-ab*c*d  
-a*b(cd)+e?f  
-3  
-acccd  
-abbbbbcccc  
-bcdcdef  
+```
+2
+ab*c*d
+a*b(cd)+e?f
+3
+acccd
+abbbbbcccc
+bcdcdef
+```
 
 ### Output:
 
-YES, 1  
-NO, 0  
-YES, 2  
+```
+YES, 1
+NO, 0
+YES, 2
+```
  
 ### Input:
 
-3  
-[a-c]{3}cab+(da)*f  
-db*a[^def]{2}gh  
-def[k-p]*p+  
-5  
-defkmnpmpp  
-acbcabbf  
-pqrstdd  
-dbaabggh  
-dbbbbamkgh  
+```
+3
+[a-c]{3}cab+(da)*f
+db*a[^def]{2}gh
+def[k-p]*p+
+5
+defkmnpmpp
+acbcabbf
+pqrstdd
+dbaabggh
+dbbbbamkgh
+```
 
 ### Output:
 
-YES, 3  
-YES, 1  
-NO, 0  
-NO, 0  
-YES, 2  
-
-
+```
+YES, 3
+YES, 1
+NO, 0
+NO, 0
+YES, 2
+```
