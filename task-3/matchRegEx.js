@@ -1,9 +1,13 @@
+"use strict";
+
+
+
 var CHARS = [];
 const QUANT = [ "?", "+", "*" ];
 
 
 
-function matchRegEx(pattern, input) {
+function matchRegExPattern(pattern, input) {
 
 	parseRegEx(pattern);
 
@@ -15,49 +19,126 @@ function matchRegEx(pattern, input) {
 
 function parseRegEx(pattern) {
 
+	console.log(pattern);
+
 	for (let i=0; i<pattern.length; ++i) {
 
-		let char, 
-			// The values '0', '2', and '3' will refer, respectively, to the
-			// symbols '?', '+', and '*'. The value '1' will mean only a single
-			// occurrence.
-			occurrence = -1;
+		let char = pattern[i];
+		console.log(pattern+" - - "+char+ "  "+i);
 
-			console.log(pattern+"  ---  "+pattern[i]);
-		if (pattern[i]=='[') {
-			let range = "";
-			++i;
-			while (true) {
-				if (pattern[i]!=']') {
-					// keep concatenating
-					range += pattern[i];
-					++i;
-				} else {
-					// character after ']'
-					++i;
-					switch (pattern[i]) {
-						case '?':
-							occurrence = 0;
-							break;
-						case '+':
-							occurrence = 2;
-							break;
-						case '*':
-							occurrence = 3;
-							break;
-					}
-					// no '?' or '+' or '*' - meaning single occurrence
-					occurrence = (
-						isLetter(pattern[i]) 
-						|| isDigit(pattern[i])
-						|| !isQuant(pattern[i])
-					) ? 1 : -1;
-					recordRange(range, occurrence);
-					break;
-				}
-			}
+		switch (char) {
+			case "[":
+				// records in global array and returns next index
+				i = recordCharRange(pattern, i);
+				break;
+			// case "(":
 		}
 
+		if (isLetter(char) || isDigit(char)) {
+			i = recordSingleChar(pattern, i);
+		}
+
+		else {
+			// i = recordOtherChar(pattern, i);
+		}
+
+	}
+
+	console.log(CHARS);
+
+}
+
+
+
+/*
+ * 
+ * 
+ * @param string
+ * @param integer: index of "["
+ * @return integer: index of character just after current range
+ */
+function recordCharRange(pattern, i) {
+
+	let range = "",
+		char = pattern[++i],
+		occurrence = {},
+		obj = {};
+
+	while (true) {
+
+		if (char=="]") {
+			occurrence = getOccurrence(pattern, i);
+			// send 3rd argument for recording range
+			recordAndPushToGlobal(range, occurrence, true);
+			break;
+		}
+
+		// concatenate until "]"
+		else {
+			range += char;
+			char = pattern[++i];
+		}
+
+	}
+
+	return i;
+
+}
+
+
+
+/*
+ * @param string
+ * @param integer 
+ * @return integer: next character's index
+ */
+function recordSingleChar(pattern, i) {
+
+	let char = pattern[i],
+		occurrence = {};
+
+	if (i+1<pattern.length) {
+
+		if (isQuant(pattern[i+1])) {
+			occurrence = getOccurrence(pattern, i);
+			recordAndPushToGlobal(pattern[i], occurrence);
+		}
+
+	}
+
+	return i;
+
+}
+
+
+
+function recordOtherChar() {}
+
+
+
+/*
+ * looks ahead for quantifier of current character/range
+ *
+ * @param pattern
+ * @param i
+ * @return object: contains min and max occurrences and next index
+ */
+// function getQuant(pattern, i) {
+// 	return (pattern[i-1]=="]") 
+// 		? getQuantForRange(pattern, i) 
+// 		: getQuantForSingle(pattern, i);
+// }
+
+
+
+function getOccurrence(pattern, i) {
+	let obj = {};
+	// look ahead for range's quantifier
+	obj = getQuant(pattern, i+1);
+	return {
+		"min": obj.min,
+		"max": obj.max,
+		"i": obj.i
 	}
 
 }
@@ -65,66 +146,230 @@ function parseRegEx(pattern) {
 
 
 /*
+ * looks ahead for quantifier of current range
+ *
+ * @param pattern
+ * @param i
+ * @return object: contains min and max occurrences and next index
+ */
+function getQuant(pattern, i) {
+
+	let char = pattern[i],
+		occurrence = {};
+
+	// returns object containing min and max occurrences and next index
+	return isQuant(char) 
+		? getSingleQuant(char, i) 
+		: char=="{" 
+			? getQuantRange(pattern, i) 
+			// if no quantifier of any kind, occurrence must be only once,
+			// and current index will be next index
+			: { "min": 1, "max": 1, "i": i };
+
+}
+
+
+
+function isQuant(char) {
+	return QUANT.indexOf(char)>-1 ? true : false;
+}
+
+
+
+/*
+ * finds out min and max occurrences for current character/range
+ *
+ * @param pattern
+ * @param i
+ * @return object: contains min and max occurrences
+ */
+function getQuantRange(pattern, i) {
+
+	// ### ONLY WORKS FOR single-digit min/max ###
+
+	let char = pattern[++i],
+		min = "",
+		max = "";
+
+	// get min first
+	// concat until "," and then convert to integer
+	// if "{" found, return object
+	while (true) {
+		if (char==",") {
+			parseInt(min);
+			break;
+		} else if (char=="}") {
+			return { "min": min, "max": min, "i": i }
+		} else {
+			min += char;
+			char = pattern[++i];
+		}
+	}
+
+	// go to character after ","
+	char = pattern[++i];
+
+	// get max
+	// concat until "}" and then convert to integer; if empty, assume "*"
+	while (true) {
+		if (char=="}") {
+			max = (max) ? parseInt(max) : "*";
+			break;
+		} else {
+			max += char;
+			char = pattern[++i];
+		}
+	}
+
+	return {
+		"min": min,
+		"max": max,
+		"i": i
+	}
+
+}
+
+
+
+/*
+ * finds out min and max occurrences for current character
+ *
+ * @param pattern
+ * @param i
+ * @return object: contains min and max occurrences
+ */
+function getSingleQuant(char, i) {
+	switch (char) {
+		case "?":
+			return { "min": 0, "max": 1, "i": i }
+		case "+":
+			return { "min": 1, "max": "*", "i": i }
+		case "*":
+			return { "min": 0, "max": "*", "i": i }
+	}
+}
+
+
+
+/*
+ * finds out starting and ending character sets and types for current range,
+ * inserts into object for current range and pushes object to global array
+ *
  * @param string range
- * @param integer occurrence
-*/
-function recordRange(range, occurrence) {
-	console.log(range);
-	console.log(occurrence);
-	if (occurrence>0) {
-		// create object in global array
-		CHARS.push({
-			"range": {
-				"status": true,
-				"ranges": [],
-				"occurrence": ""
-			}
-		});
-		// length must be multiple of 3
-		for (let i=0; i<range.length; i+=3) {
-			let ranges = CHARS[CHARS.length-1].range.ranges;
-			ranges.push({
-				"start": range[i],
-				"end": range[i+2]
-			});
-			ranges[ranges.length-1].type = isLetter(range[i]) 
-				? "letter" : isDigit(range[i]) 
-					? "digit" : "other";
-		}
-		CHARS[CHARS.length-1].range.occurrence = occurrence;
+ * @param object occurrence
+ */
+function recordAndPushToGlobal(input, occurrence, isRange) {
+console.log(input);
+console.log("input != range");
+
+	// "range": "BOOLEAN",
+	// "character": "CHAR",
+	// "type": "letter \\ digit \\ other",
+	// "occur_min": "INT",
+	// "occur_max": "INT \\ *",
+	// "negation": "BOOLEAN",
+	// "ranges": [
+	// 	{
+	// 		"start": "CHAR",
+	// 		"end": "CHAR"
+	// 		"type": "letter \\ digit \\ other"
+	// 	}
+	// ]
+
+	let char = input[0],
+		obj = {},
+		index,
+		range;
+
+	if (isRange) {
+		range = input;
+		obj.range = true;
+		obj.ranges = [];
+	} else {
+		obj.range = false;
 	}
+
+	// set flag for negation
+	obj.negation = char=="^" ? true : false;
+
+	// if negation symbol exists, move index one character ahead
+	index = obj.negation ? 1 : 0;
+
+	if (isRange) {
+		// get object array containing starting and ending characters and type
+		obj.ranges.push.apply(obj.ranges, getCharRangeSets(range, index));
+	} else {
+		obj.character = char;
+		obj.type = isLetter(char) ? "letter" : isDigit(char) ? "digit" : "other";
+	}
+
+	obj.occur_min = occurrence.min;
+	obj.occur_max = occurrence.max;
+
+	CHARS.push(obj);
+
 }
 
 
 
 /*
- * @param string character
- * @param string typeFlag: '0' for letter, '1' for digit
- * @param integer occurrence: '0', '1', '2', and '3' for, respectively,
- *   '?', single instance, '+', and '*'
-*/
-function recordSingle(character, typeFlag, occurrence) {
-	let object = {};
-	object.type = typeFlag==0 ? "letter" : "digit";
+ * extracts characters/ranges from current total range
+ *
+ * @param pattern
+ * @param i
+ * @return array: contains objects full of min-max occurrence sets and types
+ */
+function getCharRangeSets(range, index) {
+
+	let array = [];
+
+	for (let i=index; i<range.length; ++i) {
+
+		let obj = {};
+
+		// if next character exists, check if range and record starting and
+		// ending characters and type of starting character
+		if (i+1<range.length) { 
+			if (range[i+1]=="-") {
+				obj.start = range[i];
+				obj.end = range[i+2];
+				obj.type = getCharType(range[i]);
+				i +=2;
+			}
+		}
+
+		// if no more character, consider current as both start and end
+		else {
+			obj.start = range[i];
+			obj.end = range[i];
+			obj.type = getCharType(range[i]);
+		}
+
+		// store every character/range in array
+		array.push(obj);
+
+	}
+
+	return array;
+
 }
 
 
 
-function isLetter(character) {
-	return (
-		(65<=character.charCodeAt() && character.charCodeAt()<=90) 
-		|| (97<=character.charCodeAt() && character.charCodeAt()<=122) 
-	) ? true : false;
+function getCharType(char) {
+	return isLetter(char) ? "letter" : isDigit(char) ? "digit" : "other";
 }
 
 
 
-function isDigit(character) {
-	return (48<=character.charCodeAt() && character.charCodeAt()<=57) ? true : false;
+function isLetter(char) {
+	let ascii = char.charCodeAt();
+	return ((65<=ascii && ascii<=90) || (97<=ascii && ascii<=122)) ? true : false;
 }
 
 
 
-function isQuant(character) {
-	return (QUANT.indexOf(character)>-1) ? true : false;
+function isDigit(char) {
+	let ascii = char.charCodeAt();
+	return (48<=ascii & ascii<=57) ? true : false;
 }

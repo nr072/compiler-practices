@@ -1,23 +1,17 @@
 {
+	"range": "BOOLEAN",
 	"character": "CHAR",
 	"type": "letter \\ digit \\ other",
-	"occurrence": "INT",
-	"range": {
-		"status": "BOOLEAN",
-		"ranges": [
-			{
-				"start": "CHAR",
-				"end": "CHAR",
-				"type": "letter \\ digit \\ other"
-			},
-			{
-				"start": "CHAR",
-				"end": "CHAR",
-				"type": "letter \\ digit \\ other"
-			}
-		],
-		"occurrence": "INT"
-	}
+	"occur_min": "INT",
+	"occur_max": "INT \\ *",
+	"negation": "BOOLEAN",
+	"ranges": [
+		{
+			"start": "CHAR",
+			"end": "CHAR",
+			"type": "letter \\ digit \\ other"
+		}
+	]
 }
 
 
@@ -25,31 +19,28 @@
 // [a-z]*
 
 {
-	"character": "",
-	"type": "",
-	"occurrence": "",
-	"range": {
-		"status": true,
-		"ranges": [
-			{
-				"type": "letter",
-				"start": "a",
-				"end": "z",
-			}
-		],
-		"occurrence": 3,
-	}
+	"range": true,
+	"occur_min": 0,
+	"occur_max": "*",
+	"negation": false,
+	"ranges": [
+		{
+			"start": "a",
+			"end": "z",
+			"type": "letter"
+		}
+	]
 }
+
+
 
 // c*
 
 {
+	"range": false,
 	"character": "c",
 	"type": "letter",
-	"occurrence": 3,
-	"range": {
-		"status": false,
-		"ranges": [],
-		"occurrence": ""
-	}
+	"occur_min": 0,
+	"occur_max": "*",
+	"negation": false,
 }
