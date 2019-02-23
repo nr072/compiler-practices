@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+
+	<title>?</title>
+
+	<meta charset="utf-8">
+	<script src="matchRegEx.js"></script>
+
+
+	<style>
+		
+		* {
+			box-sizing: border-box;
+		}
+		html, body {
+			height: 100%;
+			width: 100%;
+		}
+		body {
+			margin: 0px;
+			padding: 40px;
+		}
+		textarea {
+			width: 50%;
+			overflow-y: auto;
+			resize: none;
+		}
+		textarea.input {
+			height: 50%;
+		}
+		textarea.output {
+			height: 40%;
+		}
+
+	</style>
+
+
+</head>
+
+
+
+
+
+
+
+
+<body>
+
+	<textarea class="input"></textarea>
+	<br>
+	<button onclick="parseAndRun()">Run</button>
+	<br><br>
+	<textarea class="output" readonly></textarea>
+	<br>
+
+</body>
+
+
+
+
+
+
+
+
+<script>
+	
+	"use strict";
+
+	parseAndRun();
+
+	function parseAndRun() {
+		
+		let input       = document.querySelector("textarea.input").value;
+		let lines       = input.split('\n');
+		let patterns    = [];
+		let inputs      = [];
+		let gotPatterns = false;
+		
+		for (let i=0; i<lines.length; ++i) {
+			if (!gotPatterns) {
+				if (Number(lines[i])) {
+					gotPatterns = true;
+					let iteration = Number(lines[i]);
+					++i;
+					for (let i2=0; i2<iteration; ++i2) {
+						patterns.push(lines[i2+i]);
+					}
+				}
+			} else if (Number(lines[i])) {
+				let iteration = Number(lines[i]);
+				++i;
+				for (let i2=0; i2<iteration; ++i2) {
+					inputs.push(lines[i2+i]);
+				}
+			}
+		}
+		console.log(patterns);
+		console.log(inputs);
+
+		// for (let i=0; i<inputs.length; ++i) {
+		// 	for (let i2=0; i2<patterns.length; ++i2) {
+		// 		let matchIndex = matchRegEx(patterns[i2], inputs[i]);
+		// 		console.log( matchIndex ? i2 : false );
+		// 	}
+		// }
+		matchRegEx("[a-c]{3}ca[e-a]b+(da)*f");
+
+	}
+
+</script>
+
+
+
+
+
+
+
+
+</html>

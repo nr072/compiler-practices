@@ -1,0 +1,17 @@
+2
+ab*c*d
+a*b(cd)+e?f
+3
+acccd
+abbbbbcccc
+bcdcdef
+3
+[a-c]{3}cab+(da)*f
+db*a[^def]{2}gh
+def[k-p]*p+
+5
+defkmnpmpp
+acbcabbf
+pqrstdd
+dbaabggh
+dbbbbamkgh
