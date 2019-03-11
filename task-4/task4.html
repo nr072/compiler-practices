@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+
+	<title>task 4</title>
+
+	<meta charset="utf-8">
+
+
+	<style>
+		
+		* {
+			margin: 0px;
+			padding: 0px;
+			box-sizing: border-box;
+		}
+		html, body {
+			height: 100%;
+			width: 100%;
+		}
+		body {
+			padding: 40px;
+			font-family: palatino;
+			font-size: 15px;
+		}
+		table {
+			margin: 20px 20px 40px 20px;
+			height: calc(100% - 60px);
+			width: 100%;
+		}
+		td {
+			border: 1px solid #aaa;
+			padding: 5px;
+			font-family: monospace;
+			font-size: 13px;
+			vertical-align: top;
+			overflow: auto;
+		}
+		td.code {
+			white-space: pre;
+			width: 55%
+		}
+		td.empty {
+			border: none;
+			width: 100px;
+			text-align: center;
+			vertical-align: middle;
+		}
+		td.output {
+			width: 35%;
+		}
+		button.edit-button {
+			margin-top: 10px;
+			display: none;
+		}
+
+	</style>
+
+
+</head>
+
+
+
+
+
+
+
+
+<body>
+
+	Upload file:
+	<input id="input" type="file" onchange="readInput(true, event)"></input>
+	<table>
+		<tr>
+			<td class="code"></td>
+			<td class="empty">
+				<button class="run-button" onclick="getMethods()">Run code</button>
+				<button class="edit-button" onclick="makeCodeEditable()">Edit code</button>
+			</td>
+			<td class="output"></td>
+		</tr>
+	</table>
+
+</body>
+
+
+
+
+
+
+
+
+<script src="getMethods.js"></script>
+
+</html>
