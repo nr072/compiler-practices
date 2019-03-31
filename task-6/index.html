@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+
+
+	<title>task 6</title>
+
+	<meta charset="utf-8">
+
+
+	<style>
+		
+		* {
+			margin: 0px;
+			padding: 0px;
+			box-sizing: border-box;
+		}
+		html, body {
+			height: 100%;
+			width: 100%;
+		}
+		body {
+			padding: 40px;
+			width: 500px;
+			font-family: monospace;
+			font-size: 13px;
+			color: #444;
+		}
+		fieldset.output,
+		div.history {
+			border: 1px solid #d3d3d3;
+			padding: 5px;
+			width: 400px;
+			max-height: 200px;
+			overflow-y: auto;
+		}
+		fieldset.output {
+			height: 200px;
+		}
+		textarea.input {
+			border: 1px solid #d3d3d3;
+			padding: 5px;
+			width: 400px;
+			overflow: hidden;
+			height: 30px;
+			resize: none;
+		}
+		div.history {
+			margin-top: -1px;
+			height: -10px;
+			display: none;
+			color: #777;
+		}
+		button.run-button {
+			margin-left: -410px;
+			width: 410px;
+			vertical-align: top;
+			position: relative;
+		}
+
+	</style>
+
+
+</head>
+
+
+
+
+
+
+
+
+<body>
+
+	<fieldset class="output"></fieldset>
+	<br>
+	<textarea class="input" contenteditable disabled></textarea>
+	<button class="run-button" onclick="hideRunButton()">Start</button>
+	<div class="history"></div>
+
+</body>
+
+
+
+
+
+
+
+
+<script src="infixPostfix.js"></script>
+
+</html>
